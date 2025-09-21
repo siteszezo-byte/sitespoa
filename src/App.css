@@ -1,11 +1,227 @@
-.auth-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 2rem;
+/* src/App.css - VERSÃO COMPLETA E FINAL */
+:root {
+  --sidebar-bg: #2c3e50;
+  --sidebar-text: #ecf0f1;
+  --sidebar-active-link: #3498db;
+  --header-bg: #ffffff;
+  --content-bg: #f4f6f9;
+  --border-color: #e0e0e0;
+  --cor-primaria: #006400;
 }
-.auth-box {
-  border: 1px solid #ccc;
-  padding: 2rem;
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Roboto", sans-serif;
+  background-color: var(--content-bg);
+}
+.app-layout {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  width: 240px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #34495e;
+}
+.sidebar-logo {
+  max-width: 60px;
+  margin-bottom: 10px;
+}
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 20px;
+}
+.nav-link {
+  padding: 15px 20px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  transition: background-color 0.2s;
+  border-left: 3px solid transparent;
+}
+.nav-link:hover {
+  background-color: #34495e;
+}
+.nav-link.active {
+  background-color: #34495e;
+  border-left-color: var(--sidebar-active-link);
+  font-weight: bold;
+}
+.disabled-link {
+  color: #7f8c8d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.header {
+  height: 60px;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.logout-button-header {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.page-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+.page-content h1 {
+  margin-top: 0;
+}
+.product-manager {
+  margin-top: 1rem;
+  text-align: left;
+}
+.form-section,
+.list-section {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  width: 40%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.list-section {
+  margin-top: 1.5rem;
+}
+.product-manager h3 {
+  margin-top: 0;
+  border-bottom: 2px solid var(--cor-primaria);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+.product-manager form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+.product-manager input,
+.product-manager button {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+.product-manager button {
+  background-color: var(--cor-primaria);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.feedback-message {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1rem;
+  grid-column: 1 / -1;
+}
+.divider {
+  border: none;
+  height: 1px;
+  background-color: #eee;
+  margin: 2rem 0;
+}
+.product-manager ul {
+  list-style: none;
+  padding: 0;
+}
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.product-item:last-child {
+  border-bottom: none;
+}
+.product-item-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+.product-item-main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+.product-item-details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #555;
+  flex-wrap: wrap;
+}
+.form-buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+}
+.edit-button,
+.cancel-button,
+.delete-button {
+  padding: 8px 12px;
+  width: auto;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.edit-button {
+  background-color: #3498db;
+}
+.edit-button:hover {
+  background-color: #2980b9;
+}
+.cancel-button {
+  background-color: #7f8c8d;
+}
+.cancel-button:hover {
+  background-color: #6c7a7d;
+}
+.delete-button {
+  background-color: #e74c3c;
+}
+.delete-button:hover {
+  background-color: #c0392b;
+}
+.product-item-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 1rem;
 }

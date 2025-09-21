@@ -1,25 +1,65 @@
 // src/App.jsx
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import "./App.css"; // Pode estilizar como quiser depois
+import { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { supabase } from "./supabaseClient";
+
+import MainLayout from "./layouts/MainLayout";
+import LoginPage from "./pages/LoginPage"; // Vamos criar esta página
+import MateriaPrimaPage from "./pages/MateriaPrimaPage";
+// Importe outras páginas que criar
+import ProdutoIndustrializadoPage from "./pages/ProdutoIndustrializadoPage";
 
 function App() {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setSession(session);
+      setLoading(false);
+    };
+
+    getSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Carregando...</div>; // Ou um componente de spinner
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>WebApp - Produtos de Origem Animal</h1>
-      </header>
-      <main>
-        <div className="auth-container">
-          <div className="auth-box">
-            <SignUp />
-          </div>
-          <div className="auth-box">
-            <Login />
-          </div>
-        </div>
-      </main>
-    </div>
+    <Routes>
+      {/* Rota de Login */}
+      <Route
+        path="/"
+        element={!session ? <LoginPage /> : <Navigate to="/dashboard" />}
+      />
+
+      {/* Rotas Protegidas do Dashboard */}
+      <Route
+        path="/dashboard"
+        element={session ? <MainLayout /> : <Navigate to="/" />}
+      >
+        {/* Rota inicial do dashboard, redireciona para matérias-primas */}
+        <Route index element={<Navigate to="materias-primas" replace />} />
+        <Route path="materias-primas" element={<MateriaPrimaPage />} />
+        <Route
+          path="produtos-industrializados"
+          element={<ProdutoIndustrializadoPage />}
+        />
+        {/* Adicione as rotas para as outras páginas aqui */}
+      </Route>
+    </Routes>
   );
 }
 
